@@ -1,7 +1,8 @@
 # ifunny-authentication-rust [![Rust](https://github.com/sudocareful/ifunny-authentication-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/sudocareful/ifunny-authentication-rust/actions/workflows/rust.yml) [![Release](https://github.com/sudocareful/ifunny-authentication-rust/actions/workflows/Release.yml/badge.svg?event=release)](https://github.com/sudocareful/ifunny-authentication-rust/actions/workflows/Release.yml)
 iFunny command line and Authentication library written in rust.
 
-![image](https://github.com/sudocareful/ifunny-authentication-rust/blob/master/ss.png?raw=true)
+![image](https://raw.githubusercontent.com/sudocareful/ifunny-authentication-rust/main/ss.png)
+
 
 ## Usage in Command Line
 
