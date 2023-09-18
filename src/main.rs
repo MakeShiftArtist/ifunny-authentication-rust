@@ -1,7 +1,7 @@
-use std::{thread, time::Duration};
 use lib::basic::BasicGenerator;
 use lib::client::login;
 use lib::error::Error;
+use std::{thread, time::Duration};
 use text_io::read;
 use tokio;
 
@@ -32,8 +32,10 @@ async fn main() {
                     let _: String = read!();
                 }
                 return true;
-            },
-            lib::error::Error::UnknownError => println!("\nUnknown error occurred because the program reached its bounds."),
+            }
+            lib::error::Error::UnknownError => {
+                println!("\nUnknown error occurred because the program reached its bounds.")
+            }
         };
         return false;
     }
@@ -42,7 +44,7 @@ async fn main() {
         Ok(bearer) => {
             println!("\nPrimed Basic Token:\n{basic}");
             println!("\nBearer Token: \n{bearer}")
-        },
+        }
         Err(err) => {
             let is_captcha_error = handle_error(err, false);
             if is_captcha_error {
@@ -50,12 +52,12 @@ async fn main() {
                     Ok(bearer) => {
                         println!("\nPrimed Basic Token:\n{basic}");
                         println!("\nBearer Token: \n{bearer}")
-                    },
+                    }
                     Err(err) => {
                         handle_error(err, true);
-                    },
+                    }
                 }
             }
-        },
+        }
     }
 }
