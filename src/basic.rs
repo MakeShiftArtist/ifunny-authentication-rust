@@ -22,6 +22,7 @@ pub enum BasicTokenLength {
 impl BasicToken {
     pub const CLIENT_ID: &str = "MsOIJ39Q28";
     pub const CLIENT_SECRET: &str = "PTDc3H8a)Vi=UYap";
+    pub const DEFAULT_LENGTH: BasicTokenLength = BasicTokenLength::Length112;
 
     /// Create a new Basic Authorization token for iFunny with the given client_id and client_secret and length
     ///
@@ -80,7 +81,7 @@ impl BasicToken {
         Self::new(
             BasicToken::CLIENT_ID,
             BasicToken::CLIENT_SECRET,
-            BasicTokenLength::Length112,
+            BasicToken::DEFAULT_LENGTH,
         )
     }
 
