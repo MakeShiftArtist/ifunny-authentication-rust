@@ -1,4 +1,4 @@
-use crate::error::Error;
+use crate::{basic::BasicToken, error::Error};
 use reqwest::Client;
 use std::collections::HashMap;
 
@@ -21,7 +21,11 @@ use std::collections::HashMap;
 /// // Sleep ten seconds
 /// let bearer = login(&username, &password, &basic);
 /// ```
-pub async fn login(username: &String, password: &String, basic: &String) -> Result<String, Error> {
+pub async fn login(
+    username: &String,
+    password: &String,
+    basic: &BasicToken,
+) -> Result<String, Error> {
     let mut form: HashMap<String, String> = HashMap::with_capacity(3);
     form.insert("grant_type".to_string(), "password".to_string());
     form.insert("username".to_string(), username.to_string());
