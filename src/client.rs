@@ -12,11 +12,13 @@ use std::collections::HashMap;
 ///
 /// ## Examples
 /// ```
-/// use lib::client::login;
-/// use lib::basic::BasicGenerator;
-/// let basic = BasicGenerator::generate();
+/// use ifunny_auth::client::login;
+/// use ifunny_auth::basic::BasicToken;
+///
+/// let basic: BasicToken = BasicToken::generate();
 /// let username = "username".to_string();
 /// let password = "password".to_string();
+///
 /// login(&username, &password, &basic);
 /// // Sleep ten seconds
 /// let bearer = login(&username, &password, &basic);
