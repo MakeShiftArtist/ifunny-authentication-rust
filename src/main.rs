@@ -3,7 +3,7 @@ use ifunny_auth::client::login;
 use ifunny_auth::error::Error;
 use std::{thread, time::Duration};
 use text_io::read;
-use tokio;
+
 
 #[tokio::main]
 async fn main() {
@@ -37,7 +37,7 @@ async fn main() {
                 println!("\nUnknown error occurred because the program reached its bounds.")
             }
         };
-        return false;
+        false
     }
 
     match login(&username, &password, &basic).await {

@@ -48,7 +48,7 @@ pub async fn login(
         .form(&form)
         .send()
         .await
-        .map_err(|e| Error::ReqwestError(e))?
+        .map_err(Error::ReqwestError)?
         .text()
         .await
         .map_err(Error::ReqwestError)?;

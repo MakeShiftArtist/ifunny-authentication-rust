@@ -62,7 +62,7 @@ impl BasicToken {
         let c: String = {
             let mut hasher = Sha1::new();
             hasher.update(b.as_bytes());
-            format!("{}", hasher.digest().to_string())
+            format!("{}", hasher.digest())
         };
 
         let decoded_hash = format!("{}{}", a, c);
