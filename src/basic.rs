@@ -4,7 +4,7 @@ use base64ct::{Base64, Encoding};
 use sha1_smol::Sha1;
 use sha2::{Digest, Sha256};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct BasicToken(String);
 
 impl std::fmt::Display for BasicToken {
@@ -95,5 +95,51 @@ impl From<String> for BasicToken {
     /// ? This assumes the string is base64 encoded
     fn from(s: String) -> Self {
         Self(s)
+    }
+}
+
+#[cfg(test)]
+mod basic_token {
+    use super::*;
+
+    #[test]
+    fn generate() {
+        let basic_one: BasicToken = BasicToken::generate();
+        let basic_two: BasicToken = BasicToken::generate();
+
+        assert!(basic_one != basic_two, "Basic tokens should be different");
+    }
+
+    #[test]
+    fn new_112() {
+        let basic = BasicToken::new(
+            BasicToken::CLIENT_ID,
+            BasicToken::CLIENT_SECRET,
+            BasicTokenLength::Length112,
+        );
+
+        assert!(basic.len() == 112);
+    }
+
+    #[test]
+    fn new_156() {
+        let basic = BasicToken::new(
+            BasicToken::CLIENT_ID,
+            BasicToken::CLIENT_SECRET,
+            BasicTokenLength::Length156,
+        );
+
+        assert!(basic.len() == 156);
+    }
+
+    #[test]
+    fn derives() {
+        const BASIC_STRING: &str = "aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==";
+
+        let basic = BasicToken::from(BASIC_STRING.to_string());
+
+        assert_eq!(basic.0, BASIC_STRING);
+        assert!(basic.to_string() == BASIC_STRING);
+        assert_eq!(basic.clone(), basic)
     }
 }
