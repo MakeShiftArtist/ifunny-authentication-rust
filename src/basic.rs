@@ -45,7 +45,7 @@ impl BasicToken {
         let uuid = Uuid::new_v4().simple();
 
         let hex = match length {
-            BasicTokenLength::Length112 => uuid.to_string().to_uppercase(),
+            BasicTokenLength::Length112 => uuid.to_string(),
             BasicTokenLength::Length156 => {
                 let mut hasher = Sha256::new();
                 hasher.update(uuid.to_string());
