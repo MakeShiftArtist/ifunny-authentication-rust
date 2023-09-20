@@ -1,13 +1,13 @@
+use ifunny_auth::basic::BasicToken;
+use ifunny_auth::client::login;
+use ifunny_auth::error::Error;
 use std::{thread, time::Duration};
-use lib::basic::BasicGenerator;
-use lib::client::login;
-use lib::error::Error;
 use text_io::read;
-use tokio;
+
 
 #[tokio::main]
 async fn main() {
-    let basic = BasicGenerator::generate();
+    let basic = BasicToken::generate();
     println!("\nPlease enter your username");
     print!("\\> ");
     let username: String = read!();
@@ -21,10 +21,10 @@ async fn main() {
     /// Returns a bool indicating whether it is a captcha Error or not.
     pub fn handle_error(err: Error, primed: bool) -> bool {
         match err {
-            lib::error::Error::BoxError(e) => println!("{e}"),
-            lib::error::Error::ReqwestError(e) => println!("{e}"),
-            lib::error::Error::JsonError(e) => println!("{e}"),
-            lib::error::Error::CaptchaRequired { captcha_url } => {
+            ifunny_auth::error::Error::BoxError(e) => println!("{e}"),
+            ifunny_auth::error::Error::ReqwestError(e) => println!("{e}"),
+            ifunny_auth::error::Error::JsonError(e) => println!("{e}"),
+            ifunny_auth::error::Error::CaptchaRequired { captcha_url } => {
                 if !primed {
                     open::that(captcha_url).unwrap();
                     println!("\nWhen the Captcha is done, please type anything and press enter to continue.");
@@ -32,17 +32,19 @@ async fn main() {
                     let _: String = read!();
                 }
                 return true;
-            },
-            lib::error::Error::UnknownError => println!("\nUnknown error occurred because the program reached its bounds."),
+            }
+            ifunny_auth::error::Error::UnknownError => {
+                println!("\nUnknown error occurred because the program reached its bounds.")
+            }
         };
-        return false;
+        false
     }
 
     match login(&username, &password, &basic).await {
         Ok(bearer) => {
             println!("\nPrimed Basic Token:\n{basic}");
             println!("\nBearer Token: \n{bearer}")
-        },
+        }
         Err(err) => {
             let is_captcha_error = handle_error(err, false);
             if is_captcha_error {
@@ -50,12 +52,12 @@ async fn main() {
                     Ok(bearer) => {
                         println!("\nPrimed Basic Token:\n{basic}");
                         println!("\nBearer Token: \n{bearer}")
-                    },
+                    }
                     Err(err) => {
                         handle_error(err, true);
-                    },
+                    }
                 }
             }
-        },
+        }
     }
 }
